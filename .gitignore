@@ -18,3 +18,5 @@ t9kgameXcode/t9kgameXcode.xcodeproj/project.pbxproj
 *.dat
 
 *.dep
+
+*.pyc
