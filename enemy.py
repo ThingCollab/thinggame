@@ -7,7 +7,8 @@ smiley = pygame.transform.smoothscale(pygame.image.load(file), (24,24))
 class enemy(pygame.sprite.Sprite):
 	def __init__(self, startpos):
 		pygame.sprite.Sprite.__init__(self, self.groups)
-		self.touchDamage = 1
+		self.health = 100
+		self.touchDamage = 10
 		self.vel = [2,0]
 		self.image = smiley
 		self.rect = self.image.get_rect()
@@ -30,6 +31,8 @@ class enemy(pygame.sprite.Sprite):
 		self.rect.top += self.vel[1]
 		self.ground = False
 		self.obstacleCollide(0, self.vel[1], obstacles)
+		if self.health <= 0:
+			self.kill()
 	
 	def obstacleCollide(self, velX, velY, obstacles):
 		for obstacle in obstacles:

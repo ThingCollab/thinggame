@@ -3,21 +3,30 @@ from pygame import *
 from hero import *
 from obstacle import *
 from enemy import *
+from projectile import *
 
-allgroup = pygame.sprite.Group()
-herogroup = pygame.sprite.Group()
+allGroup = pygame.sprite.Group()
+heroGroup = pygame.sprite.Group()
 enemyGroup = pygame.sprite.Group()
 obstacleGroup = pygame.sprite.Group()
-hero.groups = allgroup, herogroup
-obstacle.groups = allgroup, obstacleGroup
-enemy.groups = allgroup, enemyGroup
+projectileGroup = pygame.sprite.Group()
+
+hero.groups = allGroup, heroGroup
+obstacle.groups = allGroup, obstacleGroup
+enemy.groups = allGroup, enemyGroup
+projectile.groups = allGroup, projectileGroup
 
 class level:
 	
 	def __init__(self, tileDim):
 		self.levelSurface = pygame.display.set_mode((720, 480))
-		myHero = hero((64,64))
+		myHero = hero((128,64))
+		myEnemies = []
 		myEnemy = enemy((64,64))
+		myEnemies.append(myEnemy);
+		myEnemy = enemy((256,64))
+		myEnemies.append(myEnemy);
+
 		tiles = []
 		levelArray = [
 		"OOOOOOOOOOOOOOOOOOOOO",
@@ -40,13 +49,13 @@ class level:
 				x += 32
 			y += 32
 			x = 0
-#		myObstacle = obstacle([self.levelSurface.get_size()[0]/2-smiley.get_size()[0]*0.5,self.levelSurface.get_size()[1]-72])
 
 	def update(self):
 		self.levelSurface.fill((63,127,255));
-		herogroup.update(obstacleGroup, enemyGroup)
+		heroGroup.update(obstacleGroup, enemyGroup, projectileGroup)
 		enemyGroup.update(obstacleGroup)
+		projectileGroup.update(obstacleGroup, enemyGroup)
 		obstacleGroup.update()
-		allgroup.draw(self.levelSurface)
+		allGroup.draw(self.levelSurface)
 		pygame.display.flip()
 
