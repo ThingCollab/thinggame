@@ -19,7 +19,7 @@ projectile.groups = allGroup, projectileGroup
 class level:
 	
 	def __init__(self, tileDim):
-		self.levelSurface = pygame.display.set_mode((720, 480))
+		self.levelSurface = pygame.display.set_mode((736, 480))
 		myHero = hero((128,64))
 		myEnemies = []
 		myEnemy = enemy((64,64))
@@ -29,17 +29,21 @@ class level:
 
 		tiles = []
 		levelArray = [
-		"OOOOOOOOOOOOOOOOOOOOO",
-		"O                   O",
-		"O OOOOO  OOO  O   O O",
-		"O   O   O   O O  O  O",
-		"O   O   O   O O O   O",
-		"O   O    OOO  OO    O",
-		"O   O       O O O   O",
-		"O   O       O O  O  O",
-		"O   O    OOO  O   O O",
-		"O                   O",
-		"OOOOOOOOOOOOOOOOOOOOO",]
+		"OOOOOOOOOOOOOOOOOOOOOOO",
+		"O                     O",
+		"O                     O",
+		"O                     O",
+		"O  OOOOO  OOO  O   O  O",
+		"O    O   O   O O  O   O",
+		"O    O   O   O O O    O",
+		"O    O    OOO  OO     O",
+		"O    O       O O O    O",
+		"O    O       O O  O   O",
+		"O    O    OOO  O   O  O",
+		"O                     O",
+		"O                     O",
+		"O                     O",
+		"OOOOOOOOOOOOOOOOOOOOOOO",]
 		x = y = 0
 		for row in levelArray:
 			for column in row:
@@ -54,7 +58,7 @@ class level:
 		self.levelSurface.fill((63,127,255));
 		heroGroup.update(obstacleGroup, enemyGroup, projectileGroup)
 		enemyGroup.update(obstacleGroup)
-		projectileGroup.update(obstacleGroup, enemyGroup)
+		projectileGroup.update(obstacleGroup)
 		obstacleGroup.update()
 		allGroup.draw(self.levelSurface)
 		pygame.display.flip()

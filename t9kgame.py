@@ -5,7 +5,7 @@ pygame.init()
 
 pygame.display.set_caption('t9k Unofficial Collaborative Game')
 
-mainScreen = pygame.display.set_mode((640, 480))
+mainScreen = pygame.display.set_mode((736, 480))
 mainScreen = pygame.display.get_surface()
 background = pygame.Surface((mainScreen.get_width(),mainScreen.get_height()))
 
