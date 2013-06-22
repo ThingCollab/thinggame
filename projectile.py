@@ -6,11 +6,11 @@ from geometry import *
 class projectile(pygame.sprite.Sprite):
 	width = 8
 	height = 8
-	damage = 10
+	damage = 1
 	vel = [0,0]
 	pos = (0,0)
 	homing = True
-	homingRange = 25000
+	homingRange = 100
 	homingWeight = 0.1
 	speed = 0
 	def __init__(self, startpos, startvel, targetGroup):
