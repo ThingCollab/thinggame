@@ -1,35 +1,30 @@
 import pygame, urllib, cStringIO
 from pygame import *
-from hero import *
 from tile import *
-from enemy import *
+from entity import *
 from projectile import *
 
 allGroup = pygame.sprite.Group()
-heroGroup = pygame.sprite.Group()
-enemyGroup = pygame.sprite.Group()
+entityGroup = pygame.sprite.Group()
 tileGroup = pygame.sprite.Group()
 obstacleGroup = pygame.sprite.Group()
 waterGroup = pygame.sprite.Group()
 lavaGroup = pygame.sprite.Group()
 projectileGroup = pygame.sprite.Group()
 
-hero.groups = allGroup, heroGroup
-obstacle.groups = allGroup, tileGroup, obstacleGroup
-water.groups = allGroup, tileGroup, waterGroup
-lava.groups = allGroup, tileGroup, lavaGroup
-enemy.groups = allGroup, enemyGroup
+tile.groups = allGroup, tileGroup
+entity.groups = allGroup, entityGroup
 projectile.groups = allGroup, projectileGroup
 
 class level:
 	
 	def __init__(self, tileDim):
 		self.levelSurface = pygame.display.set_mode((736, 480))
-		myHero = hero((128,64))
+		myHero = entity((128,64),0)
 		myEnemies = []
-		myEnemy = enemy((64,64))
+		myEnemy = entity((64,64),1)
 		myEnemies.append(myEnemy);
-		myEnemy = enemy((256,64))
+		myEnemy = entity((256,64),1)
 		myEnemies.append(myEnemy);
 
 		tiles = []
@@ -53,13 +48,13 @@ class level:
 		for row in levelArray:
 			for column in row:
 				if column == "O":
-					p = obstacle((x, y))
+					p = tile((x, y),1)
 					tiles.append(p)
 				elif column == "W":
-					p = water((x,y))
+					p = tile((x, y),2)
 					tiles.append(p)
 				elif column == "L":
-					p = lava((x,y))
+					p = tile((x, y),3)
 					tiles.append(p)
 				x += 32
 			y += 32
@@ -67,12 +62,11 @@ class level:
 
 	def update(self):
 		self.levelSurface.fill((63,127,255));
-		heroGroup.update(obstacleGroup, waterGroup, lavaGroup, enemyGroup, projectileGroup)
-		enemyGroup.update(obstacleGroup)
-		projectileGroup.update(obstacleGroup)
+		entityGroup.update(tileGroup, entityGroup, projectileGroup)
+		projectileGroup.update(tileGroup)
 		tileGroup.update()
-		enemyGroup.draw(self.levelSurface)
-		heroGroup.draw(self.levelSurface)
+		projectileGroup.draw(self.levelSurface)
+		entityGroup.draw(self.levelSurface)
 		tileGroup.draw(self.levelSurface)
 		pygame.display.flip()
 
