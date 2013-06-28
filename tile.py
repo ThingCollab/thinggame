@@ -1,7 +1,11 @@
 import pygame, urllib, cStringIO
 from pygame import *
+from spritesheet import *
 
-class tile(pygame.sprite.Sprite):
+file = cStringIO.StringIO(urllib.urlopen("Basic Tileset.png").read())
+tileset = pygame.image.load(file)
+
+class Tile(pygame.sprite.Sprite):
 	width = 32
 	height = 32
 	type = 0
@@ -10,18 +14,17 @@ class tile(pygame.sprite.Sprite):
 #	1: Obstacle
 #	2: Water
 #	3: Lava
-	def __init__(self, startpos, starttype):
+	def __init__(self, startpos, starttype, tilenum, ss):
 		pygame.sprite.Sprite.__init__(self, self.groups)
+		self.ss = ss
 		self.pos = startpos
 		self.type = starttype
+		self.image = self.ss.image_at(tilenum)
+		self.rect = self.image.get_rect()
 		if not self.type == 0:
-			self.image = pygame.Surface((self.width,self.height))
-			self.rect = self.image.get_rect()
 			if self.type == 2:
-				self.image.fill((0,0,255))
 				self.image.set_alpha(127)
 			if self.type == 3:
-				self.image.fill((255,127,0))
 				self.image.set_alpha(239)
 	def update(self):
 		self.rect.topleft = self.pos

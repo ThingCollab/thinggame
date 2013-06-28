@@ -3,36 +3,29 @@ from pygame import *
 from tile import *
 from entity import *
 from projectile import *
-
-allGroup = pygame.sprite.Group()
-entityGroup = pygame.sprite.Group()
-tileGroup = pygame.sprite.Group()
-obstacleGroup = pygame.sprite.Group()
-waterGroup = pygame.sprite.Group()
-lavaGroup = pygame.sprite.Group()
-projectileGroup = pygame.sprite.Group()
-
-tile.groups = allGroup, tileGroup
-entity.groups = allGroup, entityGroup
-projectile.groups = allGroup, projectileGroup
+from spritesheet import *
 
 class level:
-	
 	def __init__(self, tileDim):
+		self.allGroup = pygame.sprite.Group()
+		self.entityGroup = pygame.sprite.Group()
+		self.tileGroup = pygame.sprite.Group()
+		self.obstacleGroup = pygame.sprite.Group()
+		self.waterGroup = pygame.sprite.Group()
+		self.lavaGroup = pygame.sprite.Group()
+		self.projectileGroup = pygame.sprite.Group()
+		self.tileSet = spritesheet("Basic Tileset.png",32)
+		Tile.groups = self.allGroup, self.tileGroup
+		entity.groups = self.allGroup, self.entityGroup
+		projectile.groups = self.allGroup, self.projectileGroup
 		self.levelSurface = pygame.display.set_mode((736, 480))
-		myHero = entity((128,64),0)
-		myEnemies = []
-		myEnemy = entity((64,64),1)
-		myEnemies.append(myEnemy);
-		myEnemy = entity((256,64),1)
-		myEnemies.append(myEnemy);
-
+		entities = []
 		tiles = []
 		levelArray = [
 		"OOOOOOOOOOOOOOOOOOOOOOO",
 		"O                     O",
 		"O                     O",
-		"O                     O",
+		"O  0                  O",
 		"O  OOOOO  WWW  L   L  O",
 		"O    O   W   W L  L   O",
 		"O    O   W   W L L    O",
@@ -42,31 +35,34 @@ class level:
 		"O    O    WWW  L   L  O",
 		"O                     O",
 		"O                     O",
-		"O                     O",
+		"O 2   2   2  2      2 O",
 		"OOOOOOOOOOOOOOOOOOOOOOO",]
 		x = y = 0
 		for row in levelArray:
 			for column in row:
-				if column == "O":
-					p = tile((x, y),1)
-					tiles.append(p)
-				elif column == "W":
-					p = tile((x, y),2)
-					tiles.append(p)
-				elif column == "L":
-					p = tile((x, y),3)
-					tiles.append(p)
+				if column == "O": tiles.append(Tile((x, y), 1, 1, self.tileSet))
+				elif column == "W": tiles.append(Tile((x, y), 2, 2, self.tileSet))
+				elif column == "L": tiles.append(Tile((x, y), 3, 3, self.tileSet))
+				elif column == "0": entities.append(entity((x,y),0))
+				elif column == "2": entities.append(entity((x,y),2))
 				x += 32
 			y += 32
 			x = 0
 
 	def update(self):
 		self.levelSurface.fill((63,127,255));
-		entityGroup.update(tileGroup, entityGroup, projectileGroup)
-		projectileGroup.update(tileGroup)
-		tileGroup.update()
-		projectileGroup.draw(self.levelSurface)
-		entityGroup.draw(self.levelSurface)
-		tileGroup.draw(self.levelSurface)
+		self.entityGroup.update(self.tileGroup, self.entityGroup, self.projectileGroup)
+		self.projectileGroup.update(self.tileGroup)
+		self.tileGroup.update()
+		self.projectileGroup.draw(self.levelSurface)
+		self.entityGroup.draw(self.levelSurface)
+		self.tileGroup.draw(self.levelSurface)
 		pygame.display.flip()
-
+	def writeLevel(self):
+		print "TILES"
+		for tile in self.tileGroup:
+			print str(tile.type)+"\t"+str(tile.pos)+"\t"
+		for entity in self.entityGroup:
+			print str(entity.type)+"\t"+str(entity.pos)+"\t"+str(entity.vel)+"\t"+str(entity.health)
+		for projectile in self.projectileGroup:
+			print str(projectile.type)+"\t"+str(projectile.pos)+"\t"+str(projectile.vel)+"\t"+str(projectile.targetTypes)

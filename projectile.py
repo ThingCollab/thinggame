@@ -6,12 +6,12 @@ from geometry import *
 class projectile(pygame.sprite.Sprite):
 	width = 8
 	height = 8
-	damage = 100
+	damage = 1
 	vel = [0,0]
 	pos = (0,0)
 	homing = True
-	homingRange = 100
-	homingWeight = 0.1
+	homingRange = 250
+	homingWeight = .25
 	speed = 0
 	def __init__(self, shooter, startvel, targetGroup, targetTypes):
 		pygame.sprite.Sprite.__init__(self, self.groups)
@@ -19,6 +19,7 @@ class projectile(pygame.sprite.Sprite):
 		self.shooter = shooter
 		self.targets = targetGroup
 		self.targetTypes = targetTypes
+		self.type = 0
 		self.vel = startvel
 		self.speed = length(self.vel)
 		self.image = pygame.Surface((self.width,self.height))

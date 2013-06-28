@@ -33,6 +33,8 @@ def input(events):
 		if event.type == KEYDOWN:
 			if event.key == K_p:
 				paused = 1 - paused
+			if event.key == K_w:
+				myLevel.writeLevel()
 		if event.type == QUIT:
 			sys.exit(0)
 while True:
