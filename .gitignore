@@ -15,8 +15,6 @@ t9kgameXcode/t9kgameXcode.xcodeproj/project.pbxproj
 
 .DS_Store
 
-*.dat
-
 *.dep
 
 *.pyc
