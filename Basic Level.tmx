@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="23" height="15" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Basic Tileset" tilewidth="32" tileheight="32">
+  <image source="Basic Tileset.png" width="256" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="0"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="2"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="3"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Type" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background Tiles" width="23" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYKIhZqQBHi5m4wsvZiQME2NBM48Fj9nI4oxo5mLjs+Cxh1pmo5tLitn4wgSbuaSaTUt30yq8qZlOaJG+h5rZtMIAURsB9Q==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="23" height="15"/>
+ <layer name="Foreground Tiles" width="23" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFgwWwjpo9avao2YPObEoBAHS4ADM=
+  </data>
+ </layer>
+</map>

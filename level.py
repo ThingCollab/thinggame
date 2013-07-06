@@ -37,7 +37,7 @@ class level:
 					  "O    O    WWW  L   L  O",
 					  "O                     O",
 					  "O                     O",
-					  "O 2   2   2  2      2 O",
+					  "O  2  2   2  2      2 O",
 					  "OOOOOOOOOOOOOOOOOOOOOOO",]
 		x = y = 0
 		for row in levelArray:

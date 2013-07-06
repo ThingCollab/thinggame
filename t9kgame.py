@@ -36,7 +36,7 @@ currentState = states[0]
 #	think I'll make it so that the level can load and unload the options menu manually.
 
 
-def changeState(newState):
+def changeState(newState, levelData = None):
 	global currentState
 	currentState.unload()
 	for state in states:
