@@ -19,12 +19,10 @@ class Tile(pygame.sprite.Sprite):
 		self.ss = ss
 		self.pos = startpos
 		self.type = starttype
+		if self.type == 4: self.image =	Surface((32,32),flags=SRCALPHA)
 		self.image = self.ss.image_at(tilenum)
 		self.rect = self.image.get_rect()
-		if not self.type == 0:
-			if self.type == 2:
-				self.image.set_alpha(127)
-			if self.type == 3:
-				self.image.set_alpha(239)
+		if self.type == 2: self.image.set_alpha(127)
+		if self.type == 3: self.image.set_alpha(239)
 	def update(self):
 		self.rect.topleft = self.pos

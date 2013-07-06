@@ -3,7 +3,7 @@ from pygame import *
 from projectile import *
 from geometry import *
 
-file = cStringIO.StringIO(urllib.urlopen("http://images.wikia.com/smileyofawesome/images/b/bc/Wiki.png").read())
+file = cStringIO.StringIO(urllib.urlopen("Smiley.png").read())
 smiley = pygame.transform.smoothscale(pygame.image.load(file), (32,32))
 
 class entity(pygame.sprite.Sprite):
