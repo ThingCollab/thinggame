@@ -45,8 +45,8 @@ class entity(pygame.sprite.Sprite):
 		self.lava = False
 		for tile in tiles:
 			if sprite.collide_rect(self, tile):
-				if tile.type == 2: self.water = True
-				if tile.type == 3: self.lava = True
+				if tile.type == 3: self.water = True
+				if tile.type == 4: self.lava = True
 		if self.water: self.vel = vecMul(self.vel, [0.25,0.25])
 		if self.lava:
 			self.health -= 10
@@ -79,7 +79,7 @@ class entity(pygame.sprite.Sprite):
 	
 	def obstacleCollide(self, velX, velY, obstacleTiles):
 		for oTile in obstacleTiles:
-			if sprite.collide_rect(self, oTile) and oTile.type == 1:
+			if sprite.collide_rect(self, oTile) and oTile.type == 2:
 				if velX > 0:
 					self.rect.right = oTile.rect.left
 					self.pos[0] = self.rect.left

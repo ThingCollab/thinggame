@@ -24,7 +24,7 @@
   </tile>
   <tile id="4">
    <properties>
-    <property name="Type" value="4"/>
+    <property name="type" value="4"/>
    </properties>
   </tile>
  </tileset>
@@ -33,7 +33,7 @@
    eJxjYmBgYKIhZqQBHi5m4wsvZiQME2NBM48Fj9nI4oxo5mLjs+Cxh1pmo5tLitn4wgSbuaSaTUt30yq8qZlOaJG+h5rZtMIAURsB9Q==
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="23" height="15"/>
+ <objectgroup name="Entity Layer" width="23" height="15"/>
  <layer name="Foreground Tiles" width="23" height="15">
   <data encoding="base64" compression="zlib">
    eJxjYBgFgwWwjpo9avao2YPObEoBAHS4ADM=

@@ -1,9 +1,10 @@
-import pygame, urllib, cStringIO
+import pygame, urllib, cStringIO, xml.etree.ElementTree as ET, zlib, base64, array
 from pygame import *
 from tile import *
 from entity import *
 from projectile import *
 from spritesheet import *
+
 
 class level:
 	def __init__(self):
@@ -21,8 +22,36 @@ class level:
 		projectile.groups = self.allGroup, self.projectileGroup
 		self.levelSurface = pygame.display.set_mode((736, 480))
 	def load(self):
-		entities = []
 		tiles = []
+		tree = ET.parse('Basic Level.tmx')
+		root = tree.getroot()
+		tileProperties = []
+		for layer in root.iter('tile'):
+			tileProperty = {'tileNum' : layer.attrib['id']}
+#			print layer.tag, layer.attrib
+			for g in layer:
+				tileProperty[g[0].attrib['name']] = g[0].attrib['value']
+			tileProperties.append(tileProperty)
+#		print tileProperties
+		for layer in root.iter('layer'):
+#			print layer.tag, layer.attrib['name']
+#			print "\t" + layer[0].tag, layer[0].attrib
+			data = layer[0].text.encode('ascii')
+			encoding = layer[0].attrib.pop('encoding')
+			if encoding == 'base64':
+				data = base64.b64decode(data)
+			data = zlib.decompress(data)
+			tlayer = array.array('L', [(ord(a) +(ord(b) << 8) + (ord(c) << 16) + (ord(d) << 24)) for a, b, c, d in zip(*(data[x::4] for x in range(4)))])
+			for y in range(0,15):
+				for x in range(0,23):
+					if layer.attrib['name'] == "Background Tiles" and not tlayer[y*23+x] == 1:
+						tileNum = tlayer[y*23+x]
+						tileType = 0
+						for tileProperty in tileProperties:
+							if tileProperty['tileNum'] == str(tileNum): tileType = int(tileProperty['type'])
+#						print tileNum, tileType
+						tiles.append(Tile((32*x, 32*y), tileType, tileNum, self.tileSet))
+		entities = []
 		levelArray = [
 					  "OOOOOOOOOOOOOOOOOOOOOOO",
 					  "O                     O",
@@ -42,11 +71,7 @@ class level:
 		x = y = 0
 		for row in levelArray:
 			for column in row:
-				if column == "O": tiles.append(Tile((x, y), 1, 1, self.tileSet))
-				elif column == "W": tiles.append(Tile((x, y), 2, 2, self.tileSet))
-				elif column == "L": tiles.append(Tile((x, y), 3, 3, self.tileSet))
-				elif column == "l": tiles.append(Tile((x, y), 4, 4, self.tileSet))
-				elif column == "0": entities.append(entity((x,y),0))
+				if column == "0": entities.append(entity((x,y),0))
 				elif column == "2": entities.append(entity((x,y),2))
 				x += 32
 			y += 32
